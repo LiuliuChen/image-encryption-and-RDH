@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import numpy as np
-from common import get_subBlocks, get_key_sream, combine_img, get_byte_sequence
+from common import *
 
 
 def image_encryption(img, encryption_key,permutation_key, size=(8, 8)):
@@ -57,17 +57,6 @@ def image_decrption(img, eKey, pKey, size=(8, 8)):
 
     return np.uint8(res_img)
 
-
-
-def get_permutation_key(short_key, size):
-    box = list(range(size))
-    swap_index = 0
-    for index in range(size):
-        temp = box[index]
-        swap_index = (swap_index + box[index] + short_key[index % len(short_key)]) % size
-        box[index] = box[swap_index]
-        box[swap_index] = temp
-    return box
 
 
 

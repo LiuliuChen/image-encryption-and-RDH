@@ -33,8 +33,6 @@ def data_embedding(img, size, eKey, msg):
 
     # embed
     msg_bits = str2bit_array(msg).tolist()
-    for i in range(len(msg_bits)):
-        msg_bits[i] = 1 if msg_bits[i] else 0
     location.extend(msg_bits)
     embed_bits = location
     embed_bits.append(1)
@@ -44,6 +42,9 @@ def data_embedding(img, size, eKey, msg):
         peak = get_byte_sequence(embed_key[i * len(eKey):(i + 1) * len(eKey)], size[0] * size[1])[0]
         peak_x = peak // size[0]
         peak_y = peak - peak_x * size[0]
+        # peak_x = 0
+        # peak_y = 0
+        # print('peak: ', peak_x, peak_y)
         for i_x in range(size[0]):
             for i_y in range(size[1]):
                 if i_x == peak_x and i_y == peak_y:
@@ -108,13 +109,15 @@ def data_extracting(img, eKey, size):
                     temp = embed_bits.pop(0)
                     block_list[i][i_x, i_y] = 0 if temp == 1 else 1
 
+    max_embedded_bits = len(embed_bits)
+
     while embed_bits.pop() != 1:
         pass
 
     # combine img
     res_img = combine_img(block_list, x_num, y_num, size)
 
-    return np.uint8(res_img), bit_array2str(bitarray(embed_bits))
+    return np.uint8(res_img), bit_array2str(bitarray(embed_bits)), max_embedded_bits
 
 
 

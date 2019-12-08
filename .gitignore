@@ -1,0 +1,10 @@
+## ignore this file##
+.idea
+/Inlude/
+/Lib/
+/data/
+/Scripts/
+/__pycache__/
+pyvenv.cfg
+/share/
+/result/
